@@ -136,7 +136,26 @@ class StableDiffusion(nn.Module):
         sigma_t = ((1 - alpha_bar_t_prev) / (1 - alpha_bar_t) * betas[t]).sqrt()
 
         mu = self.compute_posterior_mean(latents_noisy, noise_pred, t, t_prev)
+        # Broadcast sigma^t over spatial dims for batched timesteps
+        sigma_t = sigma_t.view(-1, 1, 1, 1)
         return (x_t_prev - mu) / sigma_t
+
+    def pds_timestep_sampling(self, batch_size, device):
+        """Sample (t, t_prev) pairs from the DDIM inference schedule.
+
+        The schedule is reversed so t_prev < t in noise level (one denoising step back).
+        """
+        self.scheduler.set_timesteps(self.num_train_timesteps)
+        # Ascending noise level: ..., t_prev, t, ... toward cleaner latents
+        timesteps = torch.flip(self.scheduler.timesteps, [0]).to(device)
+
+        min_idx = max(1, int(len(timesteps) * self.t_range[0]))
+        max_idx = max(min_idx + 1, int(len(timesteps) * self.t_range[1]))
+        idx = torch.randint(min_idx, max_idx, (batch_size,), device=device, dtype=torch.long)
+
+        t = timesteps[idx]
+        t_prev = timesteps[idx - 1]
+        return t, t_prev
 
     def get_pds_loss(
         self, src_latents, tgt_latents, 
@@ -149,10 +168,10 @@ class StableDiffusion(nn.Module):
         Edits tgt_latents toward edit_prompt while preserving source structure by
         matching stochastic latents:
 
-            grad L_pds / d(x_tgt^0) = E_{t, eps^t, eps^{t-1}} [z_tilde_src - z_tilde_tgt]
+            grad L_pds / d(x_tgt^0) ~ E_{t, eps^t, eps^{t-1}} [z_tilde_tgt - z_tilde_src]
 
         The loss is implemented via the SDS reparameterization trick:
-            L = 0.5 * ||x_tgt^0 - (x_tgt^0 - grad).detach()||^2
+            L = 0.5 * ||x_tgt^0 - (x_tgt^0 - grad).detach()||^2,  grad = z_tilde_tgt - z_tilde_src
         so backprop flows only through x_tgt^0 (not the frozen UNet).
 
         Args:
@@ -167,12 +186,7 @@ class StableDiffusion(nn.Module):
             Scalar PDS loss tensor with gradients w.r.t. tgt_latents.
         """
         batch_size = tgt_latents.shape[0]
-        # Sample a random diffusion step; t_prev is the immediately preceding step
-        t = torch.randint(
-            self.min_step, self.max_step, (batch_size,),
-            device=tgt_latents.device, dtype=torch.long,
-        )
-        t_prev = t - 1
+        t, t_prev = self.pds_timestep_sampling(batch_size, tgt_latents.device)
 
         # Shared noise variables — required so src/tgt differ only in x^0 and prompt
         noise = torch.randn_like(tgt_latents)
@@ -187,8 +201,8 @@ class StableDiffusion(nn.Module):
             noise, noise_prev, t, t_prev, guidance_scale,
         )
 
-        # PDS gradient: pull target stochastic latent toward the source's
-        grad = grad_scale * (z_src - z_tgt)
+        # grad = z_tgt - z_src so the MSE trick moves tgt toward src's trajectory
+        grad = grad_scale * (z_tgt - z_src)
         grad = torch.nan_to_num(grad)
         # Detach target so UNet weights are not updated; grad still flows via MSE trick
         target = (tgt_latents - grad).detach()
