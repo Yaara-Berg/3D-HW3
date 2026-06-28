@@ -2,6 +2,7 @@ from diffusers import DDIMScheduler, StableDiffusionPipeline
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 class StableDiffusion(nn.Module):
@@ -12,7 +13,9 @@ class StableDiffusion(nn.Module):
         self.dtype = args.precision
         print(f'[INFO] loading stable diffusion...')
 
-        model_key = "stabilityai/stable-diffusion-2-1-base"
+        # stabilityai/stable-diffusion-2-1-base was deprecated/removed from the Hub;
+        # Manojb/stable-diffusion-2-1-base is a community mirror with identical weights.
+        model_key = "Manojb/stable-diffusion-2-1-base"
         pipe = StableDiffusionPipeline.from_pretrained(
             model_key, torch_dtype=self.dtype,
         )
@@ -68,15 +71,129 @@ class StableDiffusion(nn.Module):
         raise NotImplementedError("SDS is not implemented yet.")
     
     
+    def compute_posterior_mean(self, xt, noise_pred, t, t_prev):
+        """DDPM posterior mean mu(x^t, c, eps_theta) used in the reverse step.
+
+        One reverse step is x^{t-1} = mu + sigma^t * z^t. Here mu is a linear
+        combination of the one-step denoised estimate x0_hat and the current
+        noisy latent x^t (see PDS paper Eq. 7-8).
+
+        Args:
+            xt: Noisy latent x^t at timestep t, shape [B, C, H, W].
+            noise_pred: CFG noise prediction eps_theta(x^t, c, t).
+            t: Current diffusion timestep indices.
+            t_prev: Previous timestep indices (t - 1).
+
+        Returns:
+            Posterior mean mu with the same shape as xt.
+        """
+        betas = self.scheduler.betas.to(self.device)
+        alphas = self.scheduler.alphas.to(self.device)
+        alpha_bar_t = self.alphas[t]
+        alpha_bar_t_prev = self.alphas[t_prev]
+        beta_t = betas[t]
+
+        # x0_hat = (x^t - sqrt(1 - alpha_bar_t) * eps_theta) / sqrt(alpha_bar_t)
+        pred_x0 = (xt - (1 - alpha_bar_t).sqrt() * noise_pred) / alpha_bar_t.sqrt()
+        # mu = c0 * x0_hat + c1 * x^t  (DDPM posterior mean coefficients)
+        c0 = alpha_bar_t_prev.sqrt() * beta_t / (1 - alpha_bar_t)
+        c1 = alphas[t].sqrt() * (1 - alpha_bar_t_prev) / (1 - alpha_bar_t)
+        return c0 * pred_x0 + c1 * xt
+
+    def compute_stochastic_latent(
+        self, x0, text_embeddings, noise, noise_prev, t, t_prev, guidance_scale,
+    ):
+        """Extract the stochastic latent z_tilde^t from a clean latent x^0.
+
+        Rearranges the reverse DDPM step x^{t-1} = mu + sigma^t * z^t into:
+            z_tilde^t = (x^{t-1} - mu) / sigma^t
+
+        Source and target must use the same `noise` (eps^t) and `noise_prev`
+        (eps^{t-1}) so that differences reflect prompts/latents, not sampling.
+
+        Args:
+            x0: Clean latent x^0, shape [B, C, H, W].
+            text_embeddings: Stacked [uncond, cond] embeddings for CFG.
+            noise: Shared forward-noise eps^t for building x^t.
+            noise_prev: Shared forward-noise eps^{t-1} for building x^{t-1}.
+            t: Current timestep indices.
+            t_prev: Previous timestep indices (t - 1).
+            guidance_scale: Classifier-free guidance weight.
+
+        Returns:
+            Stochastic latent z_tilde^t with the same shape as x0.
+        """
+        # x^t = sqrt(alpha_bar_t) * x^0 + sqrt(1 - alpha_bar_t) * eps^t
+        latents_noisy = self.scheduler.add_noise(x0, noise, t)
+        noise_pred = self.get_noise_preds(latents_noisy, t, text_embeddings, guidance_scale)
+        # x^{t-1} built with the same eps^{t-1} for both source and target
+        x_t_prev = self.scheduler.add_noise(x0, noise_prev, t_prev)
+
+        betas = self.scheduler.betas.to(self.device)
+        alpha_bar_t = self.alphas[t]
+        alpha_bar_t_prev = self.alphas[t_prev]
+        # sigma^t = sqrt((1 - alpha_bar_{t-1}) / (1 - alpha_bar_t) * beta_t)
+        sigma_t = ((1 - alpha_bar_t_prev) / (1 - alpha_bar_t) * betas[t]).sqrt()
+
+        mu = self.compute_posterior_mean(latents_noisy, noise_pred, t, t_prev)
+        return (x_t_prev - mu) / sigma_t
+
     def get_pds_loss(
         self, src_latents, tgt_latents, 
         src_text_embedding, tgt_text_embedding,
         guidance_scale=7.5, 
         grad_scale=1,
     ):
-        
-        # TODO: Implement the loss function for PDS
-        raise NotImplementedError("PDS is not implemented yet.")
+        """Posterior Distillation Sampling (PDS) loss for text-guided editing.
+
+        Edits tgt_latents toward edit_prompt while preserving source structure by
+        matching stochastic latents:
+
+            grad L_pds / d(x_tgt^0) = E_{t, eps^t, eps^{t-1}} [z_tilde_src - z_tilde_tgt]
+
+        The loss is implemented via the SDS reparameterization trick:
+            L = 0.5 * ||x_tgt^0 - (x_tgt^0 - grad).detach()||^2
+        so backprop flows only through x_tgt^0 (not the frozen UNet).
+
+        Args:
+            src_latents: VAE-encoded source image latent (fixed during optimization).
+            tgt_latents: Target latent being optimized, initialized from source.
+            src_text_embedding: [uncond, src_cond] embeddings for the source prompt.
+            tgt_text_embedding: [uncond, tgt_cond] embeddings for the edit prompt.
+            guidance_scale: CFG weight (7.5 for PDS per assignment).
+            grad_scale: Optional scalar on the distilled gradient.
+
+        Returns:
+            Scalar PDS loss tensor with gradients w.r.t. tgt_latents.
+        """
+        batch_size = tgt_latents.shape[0]
+        # Sample a random diffusion step; t_prev is the immediately preceding step
+        t = torch.randint(
+            self.min_step, self.max_step, (batch_size,),
+            device=tgt_latents.device, dtype=torch.long,
+        )
+        t_prev = t - 1
+
+        # Shared noise variables — required so src/tgt differ only in x^0 and prompt
+        noise = torch.randn_like(tgt_latents)
+        noise_prev = torch.randn_like(tgt_latents)
+
+        z_src = self.compute_stochastic_latent(
+            src_latents.detach(), src_text_embedding,
+            noise, noise_prev, t, t_prev, guidance_scale,
+        )
+        z_tgt = self.compute_stochastic_latent(
+            tgt_latents, tgt_text_embedding,
+            noise, noise_prev, t, t_prev, guidance_scale,
+        )
+
+        # PDS gradient: pull target stochastic latent toward the source's
+        grad = grad_scale * (z_src - z_tgt)
+        grad = torch.nan_to_num(grad)
+        # Detach target so UNet weights are not updated; grad still flows via MSE trick
+        target = (tgt_latents - grad).detach()
+        loss = 0.5 * F.mse_loss(tgt_latents, target, reduction="mean")
+        return loss
     
     
     @torch.no_grad()
