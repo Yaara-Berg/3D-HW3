@@ -2,6 +2,7 @@ from diffusers import DDIMScheduler, StableDiffusionPipeline
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 class StableDiffusion(nn.Module):
@@ -12,7 +13,7 @@ class StableDiffusion(nn.Module):
         self.dtype = args.precision
         print(f'[INFO] loading stable diffusion...')
 
-        model_key = "stabilityai/stable-diffusion-2-1-base"
+        model_key = "Manojb/stable-diffusion-2-1-base"  # public fork; original stabilityai repo is gated/unavailable
         pipe = StableDiffusionPipeline.from_pretrained(
             model_key, torch_dtype=self.dtype,
         )
@@ -65,7 +66,31 @@ class StableDiffusion(nn.Module):
     ):
         
         # TODO: Implement the loss function for SDS
-        raise NotImplementedError("SDS is not implemented yet.")
+        # 1. Randomly sample a timestep t ~ U[min_step, max_step] (one per item in the batch).
+        t = torch.randint(
+            self.min_step, self.max_step + 1, (latents.shape[0],),
+            dtype=torch.long, device=self.device,
+        )
+
+        # 2-3. Add noise to x^0 (DDIM Eq. 4 forward: x^t = sqrt(a_t) x^0 + sqrt(1-a_t) eps),
+        #       then predict the noise with the frozen UNet using Classifier-Free Guidance.
+        #       No gradient flows through the diffusion model itself.
+        with torch.no_grad():
+            noise = torch.randn_like(latents)
+            latents_noisy = self.scheduler.add_noise(latents, noise, t)
+            noise_pred = self.get_noise_preds(latents_noisy, t, text_embeddings, guidance_scale)
+
+        # 4. SDS gradient: grad = w(t) * (eps_theta(x^t, c, t) - eps), with the DreamFusion
+        #    weighting w(t) = 1 - alpha_cumprod_t.
+        w = (1 - self.alphas[t]).view(-1, 1, 1, 1)
+        grad = grad_scale * w * (noise_pred - noise)
+        grad = torch.nan_to_num(grad)
+
+        # 5. Reparameterization trick: build a loss whose gradient w.r.t. `latents` equals `grad`,
+        #    so that loss.backward() applies the SDS update to x^0.
+        target = (latents - grad).detach()
+        loss = 0.5 * F.mse_loss(latents, target, reduction="sum") / latents.shape[0]
+        return loss
     
     
     def get_pds_loss(

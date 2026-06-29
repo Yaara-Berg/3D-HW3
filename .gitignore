@@ -1,0 +1,15 @@
+# Generated images, eval outputs, configs
+outputs/
+
+# Cluster scripts and logs
+slurm/
+
+# Report
+REPORT_TASK1.md
+
+# CLIP model weights (large binary)
+ViT-B-32.pt
+
+# Python cache
+__pycache__/
+*.pyc
