@@ -87,26 +87,52 @@ def run(args):
     optimizer = torch.optim.AdamW([latents], lr=1e-1, weight_decay=0)
     scheduler = get_cosine_schedule_with_warmup(optimizer, 100, int(steps*1.5))
 
+    lora_optimizer = None
+    if args.loss_type == "vsd":
+        lora_optimizer = torch.optim.AdamW(
+            model.get_lora_parameters(), lr=1e-4, weight_decay=0,
+        )
+
     # Run optimization
     for step in tqdm(range(steps)):
-        optimizer.zero_grad()
-        
-        if args.loss_type == "sds":
-            loss = model.get_sds_loss(
+        if args.loss_type == "vsd":
+            frozen_latents = latents.detach()
+            for _ in range(args.lora_steps):
+                lora_optimizer.zero_grad()
+                lora_loss = model.get_lora_train_loss(
+                    latents=frozen_latents,
+                    text_embeddings=text_embeddings,
+                    guidance_scale=guidance_scale,
+                )
+                lora_loss.backward()
+                lora_optimizer.step()
+
+            optimizer.zero_grad()
+            loss = model.get_vsd_loss(
                 latents=latents,
-                text_embeddings=text_embeddings, 
+                text_embeddings=text_embeddings,
                 guidance_scale=guidance_scale,
             )
-            
-        elif args.loss_type == "pds":
-            loss = model.get_pds_loss(
-                src_latents=src_latents, tgt_latents=latents, 
-                src_text_embedding=text_embeddings, tgt_text_embedding=edit_embeddings,
-                guidance_scale=guidance_scale, 
-            )
-            
+
         else:
-            raise ValueError("Invalid loss type")
+            optimizer.zero_grad()
+
+            if args.loss_type == "sds":
+                loss = model.get_sds_loss(
+                    latents=latents,
+                    text_embeddings=text_embeddings, 
+                    guidance_scale=guidance_scale,
+                )
+                
+            elif args.loss_type == "pds":
+                loss = model.get_pds_loss(
+                    src_latents=src_latents, tgt_latents=latents, 
+                    src_text_embedding=text_embeddings, tgt_text_embedding=edit_embeddings,
+                    guidance_scale=guidance_scale, 
+                )
+                
+            else:
+                raise ValueError("Invalid loss type")
         
         (2000 * loss).backward()
             
@@ -121,7 +147,7 @@ def run(args):
                 print("Step: {}, Loss: {}".format(step, loss.item()))
             
     img = model.decode_latents(latents)
-    if args.loss_type == "sds":
+    if args.loss_type in ["sds", "vsd"]:
         prompt_key = args.prompt.replace(" ", "_")
     else:
         prompt_key = args.edit_prompt.replace(" ", "_")
@@ -147,6 +173,11 @@ def parse_args():
     
     parser.add_argument("--log_step", type=int, default=25)
     parser.add_argument("--precision", type=str, default="fp32")
+
+    parser.add_argument("--lora_steps", type=int, default=1,
+                        help="LoRA training steps per latent optimization step (VSD only)")
+    parser.add_argument("--lora_rank", type=int, default=4,
+                        help="LoRA rank for VSD")
     
     return parser.parse_args()
 
@@ -154,7 +185,7 @@ def parse_args():
 def main():
     args = parse_args()
     args.save_dir = os.path.join(args.save_dir, args.loss_type)
-    assert args.loss_type in ["sds", "pds"], "Invalid loss type"
+    assert args.loss_type in ["sds", "pds", "vsd"], "Invalid loss type"
     if args.loss_type in ["pds"]:
         assert args.edit_prompt is not None, f"edit_prompt is required for {args.loss_type}"
         assert args.src_img_path is not None, f"src_img_path is required for {args.loss_type}"

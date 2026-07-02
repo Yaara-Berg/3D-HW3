@@ -1,3 +1,14 @@
 venv/
 .venv/
 hw3_env/
+
+# Generated outputs and logs
+outputs/
+logs/
+
+# Python cache artifacts
+__pycache__/
+**/__pycache__/
+
+# Downloaded model weights / checkpoints
+*.pt

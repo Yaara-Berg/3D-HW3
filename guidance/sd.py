@@ -1,4 +1,5 @@
 from diffusers import DDIMScheduler, StableDiffusionPipeline
+from diffusers.models.attention_processor import LoRAAttnProcessor
 
 import torch
 import torch.nn as nn
@@ -37,6 +38,14 @@ class StableDiffusion(nn.Module):
         self.max_step = int(self.num_train_timesteps * t_range[1])
         self.alphas = self.scheduler.alphas_cumprod.to(self.device) # for convenience
 
+        # Keep a copy of the original attention processors for the frozen UNet path.
+        self.base_attn_procs = dict(self.unet.attn_processors)
+        self.lora_attn_procs = None
+        if getattr(args, "loss_type", None) == "vsd":
+            lora_rank = getattr(args, "lora_rank", 4)
+            self._init_lora(lora_rank)
+            print(f"[INFO] initialized LoRA (rank={lora_rank}) for VSD")
+
         print(f'[INFO] loaded stable diffusion!')
 
     @torch.no_grad()
@@ -47,15 +56,73 @@ class StableDiffusion(nn.Module):
         return embeddings
     
     
-    def get_noise_preds(self, latents_noisy, t, text_embeddings, guidance_scale=100):
+    def _set_attn_processors(self, use_lora=False):
+        if use_lora:
+            if self.lora_attn_procs is None:
+                raise RuntimeError("LoRA is not initialized. Use --loss_type vsd.")
+            self.unet.set_attn_processor(self.lora_attn_procs)
+        else:
+            self.unet.set_attn_processor(self.base_attn_procs)
+
+    def _init_lora(self, rank=4):
+        """Attach trainable LoRA attention processors to the UNet (phi in VSD)."""
+        lora_attn_procs = {}
+        for name in self.base_attn_procs:
+            cross_attention_dim = (
+                None if "attn1" in name else self.unet.config.cross_attention_dim
+            )
+            if name.startswith("mid_block"):
+                hidden_size = self.unet.config.block_out_channels[-1]
+            elif name.startswith("up_blocks"):
+                hidden_size = list(reversed(self.unet.config.block_out_channels))[
+                    int(name.split(".")[1])
+                ]
+            elif name.startswith("down_blocks"):
+                hidden_size = self.unet.config.block_out_channels[int(name.split(".")[1])]
+            else:
+                raise ValueError(f"Unrecognized attention processor name: {name}")
+
+            lora_attn_procs[name] = LoRAAttnProcessor(
+                hidden_size=hidden_size,
+                cross_attention_dim=cross_attention_dim,
+                rank=rank,
+            )
+
+        self.lora_attn_procs = lora_attn_procs
+        self.unet.set_attn_processor(self.lora_attn_procs)
+        self.unet.requires_grad_(False)
+        for proc in self.lora_attn_procs.values():
+            for param in proc.parameters():
+                param.requires_grad_(True)
+
+    def get_lora_parameters(self):
+        if self.lora_attn_procs is None:
+            return []
+        params = []
+        for proc in self.lora_attn_procs.values():
+            params.extend(proc.parameters())
+        return params
+
+    def sample_timestep(self, batch_size, device):
+        """Sample a random diffusion timestep in the assignment t_range."""
+        return torch.randint(
+            self.min_step,
+            self.max_step + 1,
+            (batch_size,),
+            device=device,
+            dtype=torch.long,
+        )
+
+    def get_noise_preds(self, latents_noisy, t, text_embeddings, guidance_scale=100, use_lora=False):
+        self._set_attn_processors(use_lora=use_lora)
         latent_model_input = torch.cat([latents_noisy] * 2)
-            
+
         tt = torch.cat([t] * 2)
         noise_pred = self.unet(latent_model_input, tt, encoder_hidden_states=text_embeddings).sample
 
         noise_pred_uncond, noise_pred_pos = noise_pred.chunk(2)
         noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_pos - noise_pred_uncond)
-        
+
         return noise_pred
 
 
@@ -208,8 +275,59 @@ class StableDiffusion(nn.Module):
         target = (tgt_latents - grad).detach()
         loss = 0.5 * F.mse_loss(tgt_latents, target, reduction="mean")
         return loss
-    
-    
+
+    def get_lora_train_loss(
+        self,
+        latents,
+        text_embeddings,
+        guidance_scale=7.5,
+    ):
+        """Phase A: train LoRA phi to predict noise on the current latent x^0.
+
+        Standard diffusion objective on noisy latents built from the frozen x^0:
+            L_phi = ||epsilon - epsilon_phi(x^t, c, t)||^2
+        """
+        batch_size = latents.shape[0]
+        t = self.sample_timestep(batch_size, latents.device)
+        noise = torch.randn_like(latents)
+        latents_noisy = self.scheduler.add_noise(latents.detach(), noise, t)
+        noise_pred_phi = self.get_noise_preds(
+            latents_noisy, t, text_embeddings, guidance_scale, use_lora=True,
+        )
+        return F.mse_loss(noise_pred_phi, noise, reduction="mean")
+
+    def get_vsd_loss(
+        self,
+        latents,
+        text_embeddings,
+        guidance_scale=7.5,
+        grad_scale=1,
+    ):
+        """Phase B: Variational Score Distillation loss for updating x^0.
+
+        grad L_vsd / d(x^0) ~ E_{t, epsilon} [epsilon_theta(x^t, c, t) - epsilon_phi(x^t, c, t)]
+
+        LoRA phi is treated as fixed during this step (epsilon_phi is detached).
+        """
+        batch_size = latents.shape[0]
+        t = self.sample_timestep(batch_size, latents.device)
+        noise = torch.randn_like(latents)
+        latents_noisy = self.scheduler.add_noise(latents, noise, t)
+
+        with torch.no_grad():
+            noise_pred_theta = self.get_noise_preds(
+                latents_noisy, t, text_embeddings, guidance_scale, use_lora=False,
+            )
+            noise_pred_phi = self.get_noise_preds(
+                latents_noisy, t, text_embeddings, guidance_scale, use_lora=True,
+            )
+
+        grad = grad_scale * (noise_pred_theta - noise_pred_phi)
+        grad = torch.nan_to_num(grad)
+        target = (latents - grad).detach()
+        loss = 0.5 * F.mse_loss(latents, target, reduction="mean")
+        return loss
+
     @torch.no_grad()
     def decode_latents(self, latents):
 
