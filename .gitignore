@@ -3,7 +3,7 @@ venv/
 hw3_env/
 
 # Generated outputs and logs
-outputs/
+outputs_full/
 logs/
 
 # Report

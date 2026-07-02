@@ -164,7 +164,6 @@ Organize the generated and edited images as below and submit the zip file on Gra
 ├── pds
 │   ├── a_boat_in_a_frozen_river.png
 │   ├── A_cabin_surrounded_by_snowy_forests.png
-│   ├── A_cat_sitting_on_grass.png
 │   ├── A_church_beside_a_waterfall.png
 │   ├── A_futuristic_car_wiht_neon_signs_on_the_road.png
 │   ├── A_hotdog_on_the_table.png

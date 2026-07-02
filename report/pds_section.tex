@@ -1,0 +1,105 @@
+% Task 2 (PDS) section for HW3 submission PDF.
+%
+% Compile from repo root:
+%   pdflatex -output-directory=report report/pds_section.tex
+%
+% Or include in a larger document:
+%   \input{report/pds_section_body.tex}
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{float}
+
+\graphicspath{{../data/imgs/}{../outputs/pds/}}
+
+\newcommand{\pdsclip}[1]{\textbf{CLIP:} #1}
+
+\begin{document}
+
+\section{Task 2: Posterior Distillation Sampling (PDS)}
+
+PDS edits source images toward a target prompt by matching stochastic latents
+($\tilde{z}^t$) between source and target, with shared noise samples
+$\epsilon^t$ and $\epsilon^{t-1}$. We use the fixed assignment hyperparameters:
+\texttt{guidance\_scale = 7.5}, 500 optimization steps, Stable Diffusion 2.1 base.
+
+\paragraph{Evaluation.} CLIP ViT-B/32 similarity between each edited image and its
+\textbf{edit prompt} (via \texttt{eval.py}).
+
+\paragraph{Overall CLIP score.} \textbf{0.326}
+
+\begin{table}[H]
+  \centering
+  \caption{PDS per-prompt CLIP scores (higher is better).}
+  \label{tab:pds-scores}
+  \small
+  \begin{tabular}{@{}clcc@{}}
+    \toprule
+    \# & Source prompt & Edit prompt & CLIP \\
+    \midrule
+    1  & A red bus driving on a desert road & A yellow school bus driving on a desert road & 0.353 \\
+    2  & a boat in a river & a golden boat in a river & 0.295 \\
+    3  & A cabin surrounded by forests & A cabin surrounded by flowers & 0.320 \\
+    4  & A church beside a lake & A church beside a lake at night & 0.355 \\
+    5  & A villa close to the pool & A villa covered with ivy close to the pool & 0.275 \\
+    6  & A castle next to a river & A rainbow castle next to a river & 0.351 \\
+    7  & A burger on the table & A burger with lettuce on the table & 0.291 \\
+    8  & A dog sitting on grass & A golden retriever sitting on grass & 0.324 \\
+    9  & a cat sitting on a table & a wooden cat statue sitting on a table & 0.373 \\
+    10 & A car on the road & A yellow sportscar on the road & 0.326 \\
+    \midrule
+    \multicolumn{3}{r}{\textbf{Average}} & \textbf{0.326} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Visual results}
+
+\newcommand{\pdspair}[6]{%
+  \subsubsection*{#1 \textrightarrow\ #2}
+  \pdsclip{#6}
+  \vspace{0.5em}
+
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{#3}
+      \caption{Source (#4)}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{#5}
+      \caption{Edited (#2)}
+    \end{subfigure}
+  \end{figure}
+  \vspace{0.5em}
+}
+
+\pdspair{A red bus driving on a desert road}{A yellow school bus driving on a desert road}{A_red_bus_driving_on_a_desert_road.png}{source prompt}{A_yellow_school_bus_driving_on_a_desert_road.png}{0.353}
+
+\pdspair{a boat in a river}{a golden boat in a river}{a_boat_in_a_river.png}{source prompt}{a_golden_boat_in_a_river.png}{0.295}
+
+\pdspair{A cabin surrounded by forests}{A cabin surrounded by flowers}{A_cabin_surrounded_by_forests.png}{source prompt}{A_cabin_surrounded_by_flowers.png}{0.320}
+
+\pdspair{A church beside a lake}{A church beside a lake at night}{A_church_beside_a_lake.png}{source prompt}{A_church_beside_a_lake_at_night.png}{0.355}
+
+\pdspair{A villa close to the pool}{A villa covered with ivy close to the pool}{A_villa_close_to_the_pool.png}{source prompt}{A_villa_covered_with_ivy_close_to_the_pool.png}{0.275}
+
+\pdspair{A castle next to a river}{A rainbow castle next to a river}{A_castle_next_to_a_river.png}{source prompt}{A_rainbow_castle_next_to_a_river.png}{0.351}
+
+\pdspair{A burger on the table}{A burger with lettuce on the table}{A_burger_on_the_table.png}{source prompt}{A_burger_with_lettuce_on_the_table.png}{0.291}
+
+\pdspair{A dog sitting on grass}{A golden retriever sitting on grass}{A_dog_sitting_on_grass.png}{source prompt}{A_golden_retriever_sitting_on_grass.png}{0.324}
+
+\pdspair{a cat sitting on a table}{a wooden cat statue sitting on a table}{a_cat_sitting_on_a_table.png}{source prompt}{a_wooden_cat_statue_sitting_on_a_table.png}{0.373}
+
+\pdspair{A car on the road}{A yellow sportscar on the road}{A_car_on_the_road.png}{source prompt}{A_yellow_sportscar_on_the_road.png}{0.326}
+
+\end{document}
