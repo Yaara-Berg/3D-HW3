@@ -134,8 +134,27 @@ class StableDiffusion(nn.Module):
         grad_scale=1,
     ):
         
-        # TODO: Implement the loss function for SDS
-        raise NotImplementedError("SDS is not implemented yet.")
+        # Randomly sample a timestep
+        t = torch.randint(
+            self.min_step, self.max_step + 1, (latents.shape[0],),
+            dtype=torch.long, device=self.device,
+        )
+
+        # Add noise to x^0 and predict the noise with the frozen diffusion model
+        with torch.no_grad():
+            noise = torch.randn_like(latents)
+            latents_noisy = self.scheduler.add_noise(latents, noise, t)
+            noise_pred = self.get_noise_preds(latents_noisy, t, text_embeddings, guidance_scale)
+
+        # Compute the gradient of the SDS loss
+        w = (1 - self.alphas[t]).view(-1, 1, 1, 1)
+        grad = grad_scale * w * (noise_pred - noise)
+        grad = torch.nan_to_num(grad)
+
+        # Compute the loss
+        target = (latents - grad).detach()
+        loss = 0.5 * F.mse_loss(latents, target, reduction="sum") / latents.shape[0]
+        return loss
     
     
     def compute_posterior_mean(self, xt, noise_pred, t, t_prev):

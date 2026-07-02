@@ -6,9 +6,13 @@ hw3_env/
 outputs/
 logs/
 
+# Report
+REPORT_TASK1.md
+
 # Python cache artifacts
 __pycache__/
 **/__pycache__/
+*.pyc
 
 # Downloaded model weights / checkpoints
 *.pt
