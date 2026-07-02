@@ -65,29 +65,24 @@ class StableDiffusion(nn.Module):
         grad_scale=1,
     ):
         
-        # TODO: Implement the loss function for SDS
-        # 1. Randomly sample a timestep t ~ U[min_step, max_step] (one per item in the batch).
+        # Randomly sample a timestep
         t = torch.randint(
             self.min_step, self.max_step + 1, (latents.shape[0],),
             dtype=torch.long, device=self.device,
         )
 
-        # 2-3. Add noise to x^0 (DDIM Eq. 4 forward: x^t = sqrt(a_t) x^0 + sqrt(1-a_t) eps),
-        #       then predict the noise with the frozen UNet using Classifier-Free Guidance.
-        #       No gradient flows through the diffusion model itself.
+        # Add noise to x^0 and predict the noise with the frozen diffusion model
         with torch.no_grad():
             noise = torch.randn_like(latents)
             latents_noisy = self.scheduler.add_noise(latents, noise, t)
             noise_pred = self.get_noise_preds(latents_noisy, t, text_embeddings, guidance_scale)
 
-        # 4. SDS gradient: grad = w(t) * (eps_theta(x^t, c, t) - eps), with the DreamFusion
-        #    weighting w(t) = 1 - alpha_cumprod_t.
+        # Compute the gradient of the SDS loss
         w = (1 - self.alphas[t]).view(-1, 1, 1, 1)
         grad = grad_scale * w * (noise_pred - noise)
         grad = torch.nan_to_num(grad)
 
-        # 5. Reparameterization trick: build a loss whose gradient w.r.t. `latents` equals `grad`,
-        #    so that loss.backward() applies the SDS update to x^0.
+        # Compute the loss
         target = (latents - grad).detach()
         loss = 0.5 * F.mse_loss(latents, target, reduction="sum") / latents.shape[0]
         return loss
