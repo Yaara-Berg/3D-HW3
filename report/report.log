@@ -1,0 +1,712 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.2.4)  2 JUL 2026 16:27
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**report/report.tex
+(./report/report.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-01-16>
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count193
+\Gm@cntv=\count194
+\c@Gm@tempcnt=\count195
+\Gm@bindingoffset=\dimen141
+\Gm@wd@mp=\dimen142
+\Gm@odd@mp=\dimen143
+\Gm@even@mp=\dimen144
+\Gm@layoutwidth=\dimen145
+\Gm@layoutheight=\dimen146
+\Gm@layouthoffset=\dimen147
+\Gm@layoutvoffset=\dimen148
+\Gm@dimlist=\toks17
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2022/04/08 v2.17n AMS math features
+\@mathmargin=\skip50
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks18
+\ex@=\dimen149
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen150
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count196
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count197
+\leftroot@=\count198
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count199
+\DOTSCASE@=\count266
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box51
+\strutbox@=\box52
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen151
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count267
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count268
+\dotsspace@=\muskip16
+\c@parentequation=\count269
+\dspbrk@lvl=\count270
+\tag@help=\toks19
+\row@=\count271
+\column@=\count272
+\maxfields@=\count273
+\andhelp@=\toks20
+\eqnshift@=\dimen152
+\alignsep@=\dimen153
+\tagshift@=\dimen154
+\tagwidth@=\dimen155
+\totwidth@=\dimen156
+\lineht@=\dimen157
+\@envbody=\toks21
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen158
+\Gin@req@width=\dimen159
+)
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen160
+\lightrulewidth=\dimen161
+\cmidrulewidth=\dimen162
+\belowrulesep=\dimen163
+\belowbottomsep=\dimen164
+\aboverulesep=\dimen165
+\abovetopsep=\dimen166
+\cmidrulesep=\dimen167
+\cmidrulekern=\dimen168
+\defaultaddspace=\dimen169
+\@cmidla=\count274
+\@cmidlb=\count275
+\@aboverulesep=\dimen170
+\@belowrulesep=\dimen171
+\@thisruleclass=\count276
+\@lastruleclass=\count277
+\@thisrulewidth=\dimen172
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2022/03/01 v3.6b Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
+\caption@tempdima=\dimen173
+\captionmargin=\dimen174
+\caption@leftmargin=\dimen175
+\caption@rightmargin=\dimen176
+\caption@width=\dimen177
+\caption@indent=\dimen178
+\caption@parindent=\dimen179
+\caption@hangindent=\dimen180
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count278
+\c@continuedfloat=\count279
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2022/01/07 v1.5 Sub-captions (AR)
+\c@subfigure=\count280
+\c@subtable=\count281
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2022-11-13 v7.00u Hypertext links for LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count282
+)
+\@linkdim=\dimen181
+\Hy@linkcounter=\count283
+\Hy@pagecounter=\count284
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2022-11-13 v7.00u Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count285
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2022-11-13 v7.00u Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4162.
+Package hyperref Info: Link nesting OFF on input line 4167.
+Package hyperref Info: Hyper index ON on input line 4170.
+Package hyperref Info: Plain pages OFF on input line 4177.
+Package hyperref Info: Backreferencing OFF on input line 4182.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4410.
+\c@Hy@tempcnt=\count286
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4748.
+\XeTeXLinkMargin=\dimen182
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count287
+\Field@Width=\dimen183
+\Fld@charsize=\dimen184
+Package hyperref Info: Hyper figures OFF on input line 6027.
+Package hyperref Info: Link nesting OFF on input line 6032.
+Package hyperref Info: Hyper index ON on input line 6035.
+Package hyperref Info: backreferencing OFF on input line 6042.
+Package hyperref Info: Link coloring OFF on input line 6047.
+Package hyperref Info: Link coloring with OCG OFF on input line 6052.
+Package hyperref Info: PDF/A mode OFF on input line 6057.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count288
+\c@Item=\count289
+\c@Hfootnote=\count290
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2022-11-13 v7.00u Hyperref driver for pdfTeX
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count291
+\c@bookmark@seq@number=\count292
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
+)
+\Hy@SectionHShift=\skip53
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count293
+\float@exts=\toks23
+\float@box=\box53
+\@float@everytoks=\toks24
+\@floatcapt=\box54
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count294
+\l__pdf_internal_box=\box55
+)
+(report/report.aux)
+\openout1 = `report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 452.9679pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=452.9679pt
+* \textheight=700.50687pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count295
+\scratchdimen=\dimen185
+\scratchbox=\box56
+\nofMPsegments=\count296
+\nofMParguments=\count297
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count298
+\MPscratchDim=\dimen186
+\MPnumerator=\count299
+\makeMPintoPDFobject=\count300
+\everyMPtoPDFconversion=\toks26
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package hyperref Info: Link coloring OFF on input line 22.
+
+(report/report.out) (report/report.out)
+\@outlinefile=\write3
+\openout3 = `report.out'.
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 27.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 27.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+<../outputs/sds/A_red_bus_driving_on_a_desert_road.png, id=20, 513.92pt x 513.9
+2pt>
+File: ../outputs/sds/A_red_bus_driving_on_a_desert_road.png Graphic file (type 
+png)
+<use ../outputs/sds/A_red_bus_driving_on_a_desert_road.png>
+Package pdftex.def Info: ../outputs/sds/A_red_bus_driving_on_a_desert_road.png 
+ used on input line 80.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<../outputs/sds/a_boat_in_a_river.png, id=41, 513.92pt x 513.92pt>
+File: ../outputs/sds/a_boat_in_a_river.png Graphic file (type png)
+<use ../outputs/sds/a_boat_in_a_river.png>
+Package pdftex.def Info: ../outputs/sds/a_boat_in_a_river.png  used on input li
+ne 82.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+<../outputs/sds/A_cabin_surrounded_by_forests.png, id=42, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_cabin_surrounded_by_forests.png Graphic file (type png)
+<use ../outputs/sds/A_cabin_surrounded_by_forests.png>
+Package pdftex.def Info: ../outputs/sds/A_cabin_surrounded_by_forests.png  used
+ on input line 84.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+ [2 <report/../outputs/sds/A_red_bus_driving_on_a_desert_road.png (PNG copy)> <
+report/../outputs/sds/a_boat_in_a_river.png (PNG copy)>]
+<../outputs/sds/A_church_beside_a_lake.png, id=51, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_church_beside_a_lake.png Graphic file (type png)
+<use ../outputs/sds/A_church_beside_a_lake.png>
+Package pdftex.def Info: ../outputs/sds/A_church_beside_a_lake.png  used on inp
+ut line 86.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+<../outputs/sds/A_villa_close_to_the_pool.png, id=52, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_villa_close_to_the_pool.png Graphic file (type png)
+<use ../outputs/sds/A_villa_close_to_the_pool.png>
+Package pdftex.def Info: ../outputs/sds/A_villa_close_to_the_pool.png  used on 
+input line 88.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+ [3 <report/../outputs/sds/A_cabin_surrounded_by_forests.png (PNG copy)> <repor
+t/../outputs/sds/A_church_beside_a_lake.png (PNG copy)>]
+<../outputs/sds/A_castle_next_to_a_river.png, id=61, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_castle_next_to_a_river.png Graphic file (type png)
+<use ../outputs/sds/A_castle_next_to_a_river.png>
+Package pdftex.def Info: ../outputs/sds/A_castle_next_to_a_river.png  used on i
+nput line 90.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+<../outputs/sds/A_burger_on_the_table.png, id=62, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_burger_on_the_table.png Graphic file (type png)
+<use ../outputs/sds/A_burger_on_the_table.png>
+Package pdftex.def Info: ../outputs/sds/A_burger_on_the_table.png  used on inpu
+t line 92.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+ [4 <report/../outputs/sds/A_villa_close_to_the_pool.png (PNG copy)> <report/..
+/outputs/sds/A_castle_next_to_a_river.png (PNG copy)>]
+<../outputs/sds/A_dog_sitting_on_grass.png, id=71, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_dog_sitting_on_grass.png Graphic file (type png)
+<use ../outputs/sds/A_dog_sitting_on_grass.png>
+Package pdftex.def Info: ../outputs/sds/A_dog_sitting_on_grass.png  used on inp
+ut line 94.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+<../outputs/sds/a_cat_sitting_on_a_table.png, id=72, 513.92pt x 513.92pt>
+File: ../outputs/sds/a_cat_sitting_on_a_table.png Graphic file (type png)
+<use ../outputs/sds/a_cat_sitting_on_a_table.png>
+Package pdftex.def Info: ../outputs/sds/a_cat_sitting_on_a_table.png  used on i
+nput line 96.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+ [5 <report/../outputs/sds/A_burger_on_the_table.png (PNG copy)> <report/../out
+puts/sds/A_dog_sitting_on_grass.png (PNG copy)>]
+<../outputs/sds/A_car_on_the_road.png, id=81, 513.92pt x 513.92pt>
+File: ../outputs/sds/A_car_on_the_road.png Graphic file (type png)
+<use ../outputs/sds/A_car_on_the_road.png>
+Package pdftex.def Info: ../outputs/sds/A_car_on_the_road.png  used on input li
+ne 98.
+(pdftex.def)             Requested size: 226.48395pt x 226.4862pt.
+ [6 <report/../outputs/sds/a_cat_sitting_on_a_table.png (PNG copy)> <report/../
+outputs/sds/A_car_on_the_road.png (PNG copy)>]
+<../data/imgs//A_red_bus_driving_on_a_desert_road.png, id=89, 513.92pt x 513.92
+pt>
+File: ../data/imgs//A_red_bus_driving_on_a_desert_road.png Graphic file (type p
+ng)
+<use ../data/imgs//A_red_bus_driving_on_a_desert_road.png>
+Package pdftex.def Info: ../data/imgs//A_red_bus_driving_on_a_desert_road.png  
+used on input line 162.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_yellow_school_bus_driving_on_a_desert_road.png, id=90, 513.9
+2pt x 513.92pt>
+File: ../outputs/pds//A_yellow_school_bus_driving_on_a_desert_road.png Graphic 
+file (type png)
+<use ../outputs/pds//A_yellow_school_bus_driving_on_a_desert_road.png>
+Package pdftex.def Info: ../outputs/pds//A_yellow_school_bus_driving_on_a_deser
+t_road.png  used on input line 162.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+ [7
+
+ <report/../data/imgs//A_red_bus_driving_on_a_desert_road.png (PNG copy)> <repo
+rt/../outputs/pds//A_yellow_school_bus_driving_on_a_desert_road.png (PNG copy)>
+]
+<../data/imgs//a_boat_in_a_river.png, id=103, 385.44pt x 385.44pt>
+File: ../data/imgs//a_boat_in_a_river.png Graphic file (type png)
+<use ../data/imgs//a_boat_in_a_river.png>
+Package pdftex.def Info: ../data/imgs//a_boat_in_a_river.png  used on input lin
+e 164.
+(pdftex.def)             Requested size: 217.42265pt x 217.42113pt.
+<../outputs/pds//a_golden_boat_in_a_river.png, id=104, 513.92pt x 513.92pt>
+File: ../outputs/pds//a_golden_boat_in_a_river.png Graphic file (type png)
+<use ../outputs/pds//a_golden_boat_in_a_river.png>
+Package pdftex.def Info: ../outputs/pds//a_golden_boat_in_a_river.png  used on 
+input line 164.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../data/imgs//A_cabin_surrounded_by_forests.png, id=105, 513.92pt x 513.92pt>
+File: ../data/imgs//A_cabin_surrounded_by_forests.png Graphic file (type png)
+<use ../data/imgs//A_cabin_surrounded_by_forests.png>
+Package pdftex.def Info: ../data/imgs//A_cabin_surrounded_by_forests.png  used 
+on input line 166.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_cabin_surrounded_by_flowers.png, id=106, 513.92pt x 513.92pt
+>
+File: ../outputs/pds//A_cabin_surrounded_by_flowers.png Graphic file (type png)
+
+<use ../outputs/pds//A_cabin_surrounded_by_flowers.png>
+Package pdftex.def Info: ../outputs/pds//A_cabin_surrounded_by_flowers.png  use
+d on input line 166.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../data/imgs//A_church_beside_a_lake.png, id=107, 513.92pt x 513.92pt>
+File: ../data/imgs//A_church_beside_a_lake.png Graphic file (type png)
+<use ../data/imgs//A_church_beside_a_lake.png>
+Package pdftex.def Info: ../data/imgs//A_church_beside_a_lake.png  used on inpu
+t line 168.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_church_beside_a_lake_at_night.png, id=108, 513.92pt x 513.92
+pt>
+File: ../outputs/pds//A_church_beside_a_lake_at_night.png Graphic file (type pn
+g)
+<use ../outputs/pds//A_church_beside_a_lake_at_night.png>
+Package pdftex.def Info: ../outputs/pds//A_church_beside_a_lake_at_night.png  u
+sed on input line 168.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+ [8 <report/../data/imgs//a_boat_in_a_river.png (PNG copy)> <report/../outputs/
+pds//a_golden_boat_in_a_river.png (PNG copy)> <report/../data/imgs//A_cabin_sur
+rounded_by_forests.png (PNG copy)> <report/../outputs/pds//A_cabin_surrounded_b
+y_flowers.png (PNG copy)>]
+<../data/imgs//A_villa_close_to_the_pool.png, id=118, 513.92pt x 513.92pt>
+File: ../data/imgs//A_villa_close_to_the_pool.png Graphic file (type png)
+<use ../data/imgs//A_villa_close_to_the_pool.png>
+Package pdftex.def Info: ../data/imgs//A_villa_close_to_the_pool.png  used on i
+nput line 170.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_villa_covered_with_ivy_close_to_the_pool.png, id=119, 513.92
+pt x 513.92pt>
+File: ../outputs/pds//A_villa_covered_with_ivy_close_to_the_pool.png Graphic fi
+le (type png)
+<use ../outputs/pds//A_villa_covered_with_ivy_close_to_the_pool.png>
+Package pdftex.def Info: ../outputs/pds//A_villa_covered_with_ivy_close_to_the_
+pool.png  used on input line 170.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../data/imgs//A_castle_next_to_a_river.png, id=120, 513.92pt x 513.92pt>
+File: ../data/imgs//A_castle_next_to_a_river.png Graphic file (type png)
+<use ../data/imgs//A_castle_next_to_a_river.png>
+Package pdftex.def Info: ../data/imgs//A_castle_next_to_a_river.png  used on in
+put line 172.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_rainbow_castle_next_to_a_river.png, id=121, 513.92pt x 513.9
+2pt>
+File: ../outputs/pds//A_rainbow_castle_next_to_a_river.png Graphic file (type p
+ng)
+<use ../outputs/pds//A_rainbow_castle_next_to_a_river.png>
+Package pdftex.def Info: ../outputs/pds//A_rainbow_castle_next_to_a_river.png  
+used on input line 172.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+ [9 <report/../data/imgs//A_church_beside_a_lake.png (PNG copy)> <report/../out
+puts/pds//A_church_beside_a_lake_at_night.png (PNG copy)> <report/../data/imgs/
+/A_villa_close_to_the_pool.png (PNG copy)> <report/../outputs/pds//A_villa_cove
+red_with_ivy_close_to_the_pool.png (PNG copy)>]
+<../data/imgs//A_burger_on_the_table.png, id=130, 513.92pt x 513.92pt>
+File: ../data/imgs//A_burger_on_the_table.png Graphic file (type png)
+<use ../data/imgs//A_burger_on_the_table.png>
+Package pdftex.def Info: ../data/imgs//A_burger_on_the_table.png  used on input
+ line 174.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_burger_with_lettuce_on_the_table.png, id=131, 513.92pt x 513
+.92pt>
+File: ../outputs/pds//A_burger_with_lettuce_on_the_table.png Graphic file (type
+ png)
+<use ../outputs/pds//A_burger_with_lettuce_on_the_table.png>
+Package pdftex.def Info: ../outputs/pds//A_burger_with_lettuce_on_the_table.png
+  used on input line 174.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../data/imgs//A_dog_sitting_on_grass.png, id=132, 513.92pt x 513.92pt>
+File: ../data/imgs//A_dog_sitting_on_grass.png Graphic file (type png)
+<use ../data/imgs//A_dog_sitting_on_grass.png>
+Package pdftex.def Info: ../data/imgs//A_dog_sitting_on_grass.png  used on inpu
+t line 176.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_golden_retriever_sitting_on_grass.png, id=133, 513.92pt x 51
+3.92pt>
+File: ../outputs/pds//A_golden_retriever_sitting_on_grass.png Graphic file (typ
+e png)
+<use ../outputs/pds//A_golden_retriever_sitting_on_grass.png>
+Package pdftex.def Info: ../outputs/pds//A_golden_retriever_sitting_on_grass.pn
+g  used on input line 176.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+ [10 <report/../data/imgs//A_castle_next_to_a_river.png (PNG copy)> <report/../
+outputs/pds//A_rainbow_castle_next_to_a_river.png (PNG copy)> <report/../data/i
+mgs//A_burger_on_the_table.png (PNG copy)> <report/../outputs/pds//A_burger_wit
+h_lettuce_on_the_table.png (PNG copy)>]
+<../data/imgs//a_cat_sitting_on_a_table.png, id=142, 513.92pt x 513.92pt>
+File: ../data/imgs//a_cat_sitting_on_a_table.png Graphic file (type png)
+<use ../data/imgs//a_cat_sitting_on_a_table.png>
+Package pdftex.def Info: ../data/imgs//a_cat_sitting_on_a_table.png  used on in
+put line 178.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//a_wooden_cat_statue_sitting_on_a_table.png, id=143, 513.92pt x
+ 513.92pt>
+File: ../outputs/pds//a_wooden_cat_statue_sitting_on_a_table.png Graphic file (
+type png)
+<use ../outputs/pds//a_wooden_cat_statue_sitting_on_a_table.png>
+Package pdftex.def Info: ../outputs/pds//a_wooden_cat_statue_sitting_on_a_table
+.png  used on input line 178.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../data/imgs//A_car_on_the_road.png, id=144, 513.92pt x 513.92pt>
+File: ../data/imgs//A_car_on_the_road.png Graphic file (type png)
+<use ../data/imgs//A_car_on_the_road.png>
+Package pdftex.def Info: ../data/imgs//A_car_on_the_road.png  used on input lin
+e 180.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+<../outputs/pds//A_yellow_sportscar_on_the_road.png, id=145, 513.92pt x 513.92p
+t>
+File: ../outputs/pds//A_yellow_sportscar_on_the_road.png Graphic file (type png
+)
+<use ../outputs/pds//A_yellow_sportscar_on_the_road.png>
+Package pdftex.def Info: ../outputs/pds//A_yellow_sportscar_on_the_road.png  us
+ed on input line 180.
+(pdftex.def)             Requested size: 217.42265pt x 217.42111pt.
+ [11 <report/../data/imgs//A_dog_sitting_on_grass.png (PNG copy)> <report/../ou
+tputs/pds//A_golden_retriever_sitting_on_grass.png (PNG copy)> <report/../data/
+imgs//a_cat_sitting_on_a_table.png (PNG copy)> <report/../outputs/pds//a_wooden
+_cat_statue_sitting_on_a_table.png (PNG copy)>] [12 <report/../data/imgs//A_car
+_on_the_road.png (PNG copy)> <report/../outputs/pds//A_yellow_sportscar_on_the_
+road.png (PNG copy)>] (report/report.aux)
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: 792F3E08DEA0DC27D0B255E09DA5BDDA;818.
+ ) 
+Here is how much of TeX's memory you used:
+ 11694 strings out of 477416
+ 194320 string characters out of 5827373
+ 1862330 words of memory out of 5000000
+ 31777 multiletter control sequences out of 15000+600000
+ 520973 words of font info for 66 fonts, out of 8000000 for 9000
+ 331 hyphenation exceptions out of 8191
+ 75i,9n,76p,337b,511s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/
+texmf/fonts/type1/public/cm-super/sfbx1095.pfb>
+Output written on report/report.pdf (12 pages, 10761995 bytes).
+PDF statistics:
+ 232 PDF objects out of 1000 (max. 8388607)
+ 160 compressed objects within 2 object streams
+ 63 named destinations out of 1000 (max. 500000)
+ 183 words of extra memory for PDF output out of 10000 (max. 10000000)
+
